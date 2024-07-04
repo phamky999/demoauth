@@ -1,0 +1,17 @@
+import { MenuProps } from 'antd';
+
+const removeDisabledNavItem = (data: MenuProps['items']) => {
+  return data
+    ? data.filter((item: any) => {
+        if (!item) return false;
+        if (item.hasOwnProperty('children')) {
+          item.children = removeDisabledNavItem(item?.children);
+          return item.children.length > 0;
+        } else {
+          return !item.disabled;
+        }
+      })
+    : [];
+};
+
+export default removeDisabledNavItem;
